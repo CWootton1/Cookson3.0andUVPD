@@ -1,0 +1,14 @@
+Requirements for labview programs:
+
+Cookson 3.0 			- Labview runtime environment 2014 64 bit
+				- comes up if you attempt to run program
+				- will auto-run when opened
+
+Excimer trigger program 	- hardware-centered program
+				- Need DAQmx driver Version 20.0
+				- and Labview runtime environment 2019 32 bit
+				- would help to have NI MAX version 20.0 too to check hardware
+				- The DAQ card/hardware used needs to allow digital triggering and have an analogue out port
+				- devices used for tests with program; NI PCI-6221, NI USB 6221, and NI PXI 6733 - all worked fine
+				- program will work with and DAQmx capable hardware with the needed functionality
+				- run with white arrow in menu bar, stop with main button
