@@ -1,6 +1,6 @@
 These pulse programs files can be copy-pasted into the pulse program folder in the FTMS control directory:
-
-These "single file" pulse program versions are designed to stay in the list and loaded when needed from the FTMS/MRMS control software GUI. This is done by going to XXX -> XXX -> select pulse program. while in stop mode. 
+C:\Bruker\ftmsControl\goFTMS\exp\lists\pp.ftmsControl
+These "single file" pulse program versions are designed to stay in the list and loaded when needed from the FTMS/MRMS control software GUI. This is done by going to Tools -> Pulse program -> select pulse program. while in stop mode. 
 The pulse program is then compiled and used on next tune/acquisition.
 they do not need to be copy/pasted into a directory every time they are needed like older/different "2 file" pulse programs. 
 
