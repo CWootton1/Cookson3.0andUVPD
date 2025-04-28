@@ -1,0 +1,95 @@
+;==========================================================================
+; BASIC_PCD : Bruker Acquisition Sequence (for) Instrument Control
+;             providing an auto-incremented delay for Post Capture Delay (PCD)
+;
+; A simplified generic event sequence (pulse program) for ftmsControl.
+; This PCD version is a simplified and specialized version of BASIC, so it
+; does not supports ETD or MSn events.
+;
+; Rev 1.0 (02/22/13) -- created
+; Rev 1.2 (11/23/15) -- added various "PREAMP" events  (for QPD control)
+;==========================================================================
+
+;--------------------------------------
+;Initialization Block
+;--------------------------------------
+INITIALIZE_PREAMP
+DEFINE_PCD_TIME
+INITIALIZE_PCD_TIME
+INITIALIZE_EXP
+
+;--------------------------------------
+;Dataset Acquisition Block ("2D" loop)
+;--------------------------------------
+EXP_START
+
+;--------------------------------------
+;Scan Accumulation Block (NS loop)
+;--------------------------------------
+SCAN_START
+ULTRA_RF_ON
+PREAMP_EXCITE_MODE_ENABLE
+COLL_CELL_DC_HIGH
+
+;--------------------------------------
+;Source & Infinity Cell Quench Block
+;--------------------------------------
+ION_QUENCH
+
+;--------------------------------------
+;Ion Accumulation Block (start)
+;--------------------------------------
+SOURCE_ACCUM
+
+;--------------------------------------
+;Accumulation in Collision Cell Block
+;--------------------------------------
+COLL_CELL_ACCUM
+
+;--------------------------------------
+;Accumulation in Helix Cell Block
+;--------------------------------------
+INFINITY_CELL_ACCUM
+
+;--------------------------------------
+;PCD immediately follows ion accumulation in Helix Cell 
+;--------------------------------------
+pcdTime			; PCD time -- varies for each loop
+
+;--------------------------------------
+;Ion Accumulation Block (end)
+;(repeat Accumulation blocks for Source, Collision Cell, Infinity Cell)
+;--------------------------------------
+REPETITIVE_ION_ACCUM
+
+
+;======================================================================
+;         EXCITATION AND DETECTION
+;======================================================================
+
+; reset phase immediately before Excitation event
+FCU_RESET
+
+;--------------------------------------
+;Excitation Block
+;--------------------------------------
+   d25   setnmr4|31		; trigger AUX pin 35 and wait for D25 time
+   1u setnmr4^31
+EXCITATION
+
+;--------------------------------------
+;Detection Block
+;--------------------------------------
+ULTRA_RF_OFF
+PREAMP_DETECT_MODE_ENABLE
+DETECTION_PCD
+
+;--------------------------------------
+;Write, Serial Loop, Exit Block
+;--------------------------------------
+WRITE_DATA_PCD
+
+;--------------------------------------
+; Phase program definitions for FCUs
+;--------------------------------------
+PHASE_PROGRAM_PCD
